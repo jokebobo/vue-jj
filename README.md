@@ -1,4 +1,4 @@
-# jj
+# 家居页面
 家居页面vue改写 使用技术栈 vue-cli+vuex+vue-router+mock 数据从隔壁jokebobo/data-server模拟数据调取
 
 ## Project setup
