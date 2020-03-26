@@ -1,0 +1,122 @@
+@charset "utf-8";
+body{
+    background:#fcfcfc;
+}
+.hot_det .act_pho{
+    width: 750px;
+    height: 434px;
+}
+.hot_det .hot_det2{
+    padding: 0px 27px;
+    background: #fff;
+}
+.hot_det .hot_det2 .hot_tit{
+    font-size: 30px;
+}
+.hot_det .hot_det2 .hot_top{
+    padding:39px 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+.hot_det .hot_det2 .hot_inf p,.hot_det .hot_det2 .hot_inf span{
+    padding-left: 30px;
+    line-height: 42px;
+    height: 42px;
+
+}
+.hot_det .hot_det2 .hot_inf p{
+    color: #999999;
+    background: url(../../assets/clock.png) no-repeat left center;
+    background-size: 22px 22px;
+}
+.hot_det .hot_det2 .hot_inf span{
+    width: 121px;
+    padding: 0;
+    border: 1px solid #28aee4;
+    color: #28aee4;
+    text-align: center;
+    border-radius:5px;
+}
+.hot_det .hot_det2 .hot_inf span.pre_state{
+    color: #28aee4;
+    border:1px solid #28aee4;
+}
+.hot_det .hot_det2 .hot_inf span.doing_state{
+    color: #f2801c;
+    border:1px solid #f2801c;
+}
+.hot_det .hot_det2 .hot_inf span.done_state{
+    color: #999999;
+    border:1px solid #999999;
+}
+.hot_det .hot_det2 .bm_hint{
+    padding: 37px 0 15px;
+    font-size: 30px;
+    line-height: 56px;
+
+}
+.hot_det .hot_det2 .bm_hint a{
+    color:#ff6600;
+    margin-left: 11px;
+}
+.bm_fm{
+    padding: 0 27px;
+}
+.bm_fm form{
+    padding:40px 55px 55px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 6px 6px 6px #f4f4f4;
+    font-size: 26px;
+    line-height: 65px;
+}
+.bm_fm form h5{
+    font-size:33px;
+    font-weight: bold;
+    line-height: 33px;
+    text-align: center;
+}
+.bm_fm form .label_group{
+    display:flex;
+    display:-webkit-flex;
+    flex-direction: column;
+    width: 140px;
+}
+.bm_fm form .label_group label{
+    color: #999999;
+    text-align-last: justify;
+    margin: 0;
+    margin-top:35px;
+    display: block;
+}
+.bm_fm form .label_group label:after{
+    content:":"
+}
+.bm_fm form .label_group label:nth-of-type(1){
+    margin-top: 0;
+}
+.bm_fm form .inp_group{
+    width: 413px;
+}
+.bm_fm form .inp_group input[type="text"]{
+    width: 413px;
+    height: 64px;
+    line-height: 64px;
+    border-radius: 5px;
+    border:1px solid #999999;
+}
+.bm_fm form .inp_group input[type="radio"]{
+    width:30px;
+    height:20px;
+}
+.bm_fm form input[type='button']{
+    width:100%;
+    height: 81px;
+    line-height: 81px;
+    text-align: center;
+    color:#fff;
+    background: #ff6600;
+    border-radius: 15px;
+    margin-top: 35px;
+    border: none;
+    font-size: 35px;
+}
