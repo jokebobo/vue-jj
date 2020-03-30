@@ -1,0 +1,109 @@
+@charset "utf-8";
+/*菜单栏*/
+.nav_box{
+    height:70px;
+    left:0;
+    z-index:10;
+}
+.nav{
+    line-height:70px;
+    background:#fff;
+    color:#6a6a6a;
+}
+.nav li p{
+    padding-right:28px;
+    line-height:70px;
+    height:70px;
+    position:relative;
+    font-size:28px;
+}
+.nav li p .arr_up,.nav li p .arr_down{
+    font-size:24px;
+    position:absolute;
+    right:0;
+    top:0;
+    color:#6a6a6a;
+}
+.nav li p .arr_up{
+    color:#ff7200;
+}
+.nav_box .nav_tab{
+    position:absolute;
+    left:0;
+    top:70px;
+    background:rgba(0,0,0,.5);
+}
+.nav_box .nav_tab .nav_list{
+    padding:16px 35px 45px!important;
+    background:#fff;
+}
+.nav_box .nav_tab .nav_list span{
+    width:146px;
+    height:59px;
+    line-height:59px;
+    text-align:center;
+    background:#f4f4f4;
+    color:#6a6a6a;
+    border-radius:9px;
+    margin-left:24px;
+    display:inline-block;
+    margin-top:30px;
+}
+/**/
+.nav_box .nav .nav_cho{
+    color:#6a6a6a;
+    border-bottom: 5px solid #ff7200;
+}
+.nav_box .nav .nav_cho .arr_up{
+    display:block;
+    color:#ff7200;
+}
+.nav_box .nav .nav_cho .arr_down{
+    display:none;
+}
+.nav_box .nav .nav_cho + .nav_det{
+    display: block!important;
+}
+.nav_box .nav .det_cho {
+    color:#ff7200;
+}
+.nav_box .nav_tab .nav_list .tab_cho{
+    background:#ff7200;
+    color:#fff;
+}
+.nav li .nav_det{
+    left:0;
+    top:70px;
+    line-height: 70px;
+    padding-top:15px;
+    background: #fff;
+    width:150px;
+    font-size: 28px;
+   /* height:575px;*/
+    display:none;
+}
+.nav li .nav_det.spe_wid{
+    width: 750px;
+    left:calc(-750px/3);
+    height: auto;
+}
+.nav>li:last-child .nav_det{
+    left:calc(-750px/3*2);
+}
+.nav li .nav_det .chi{
+    left:150px;
+    top:-15px;
+    padding-top:15px;
+    width:600px;
+    background:#f2f2f2;
+    display: none;
+}
+.nav li .nav_det li.cho>p{
+    color: #ff761a;
+}
+.nav li .nav_det .par_li.cho .chi{
+    display: block;
+}
+.nav li .nav_det .par_li:nth-of-type(2) .chi{
+    top:-85px;
+}

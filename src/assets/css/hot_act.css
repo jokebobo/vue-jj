@@ -1,0 +1,55 @@
+/*热门活动*/
+.hot_list{
+    padding-bottom:40px;
+}
+.hot_part{
+    padding:20px 0;
+}
+.hot_part .hot_con{
+    padding: 0 27px;
+    margin-top: 24px;
+}
+.hot_part .hot_con .hot_int{
+    width:400px;
+
+}
+.hot_part .hot_con img{
+    width:275px;
+    height:199px;
+}
+.hot_part .hot_con .hot_int .hot_tit{
+    line-height: 40px;
+    font-size: 25px;
+}
+.hot_part .hot_con .hot_int .hot_tim{
+    line-height:28px;
+    margin-top: 12px;
+    color:#999999;
+    font-size: 22px;
+    padding-left: 33px;
+    background: url(../../assets/clock.png) no-repeat left center;
+
+}
+.hot_part .hot_con .hot_int .hot_sta{
+    height: 38px;
+    line-height: 38px;
+    padding:0 8px;
+    margin-top: 22px;
+    border-radius: 5px;
+    font-size: 24px;
+    display: inline-block;
+}
+.hot_part .hot_con .hot_int .hot_sta.pre_state{
+    color: #28aee4;
+    border:1px solid #28aee4;
+}
+.hot_part .hot_con .hot_int .hot_sta.doing_state{
+    color: #f2801c;
+    border:1px solid #f2801c;
+}
+.hot_part .hot_con .hot_int .hot_sta.done_state{
+    color: #999999;
+    border:1px solid #999999;
+}
+
+
