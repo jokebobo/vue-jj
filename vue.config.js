@@ -8,12 +8,18 @@ function resolve(dir) {
 module.exports={
     lintOnSave: false,// 保存时不用eslint进行检查
     assetsDir: 'static',
+<<<<<<< HEAD
     publicPath: './',
     devServer:{
       port:8800,
       /* proxy:{
 
       } */
+=======
+    publicPath: '/',
+    devServer:{
+      port:8800
+>>>>>>> d9819eb8e042a5f5bbf36dae2793183d219508a4
     },
     pages:{
       //配置多页面,chunks指定在页面内引入哪些js文件

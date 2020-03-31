@@ -55,7 +55,11 @@ const routes = [
 ]
 
 const router = new VueRouter({
+<<<<<<< HEAD
   mode: 'history',
+=======
+  mode: 'hash',
+>>>>>>> d9819eb8e042a5f5bbf36dae2793183d219508a4
   base: process.env.BASE_URL,
   routes
 })
@@ -70,9 +74,13 @@ router.beforeResolve((to,from,next)=>{
   var fetchArr=[];
   matched.map((r)=>{
     if(r.fetchData){
+<<<<<<< HEAD
       console.log(r.fetchData);
       const fetchData=r.fetchData();
       fetchArr.push(fetchData);
+=======
+      fetchArr.push(r.fetchData());
+>>>>>>> d9819eb8e042a5f5bbf36dae2793183d219508a4
     }
   }) 
   console.log("异步函数数组",fetchArr)
