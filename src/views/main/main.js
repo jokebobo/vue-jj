@@ -7,6 +7,7 @@ import '../../../node_modules/swiper/css/swiper.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import qs from 'qs'
 import axios from 'axios'
+import {post,get} from '../../utils/req-methods'
 Vue.use(VueAwesomeSwiper)
 
 
@@ -15,28 +16,8 @@ Vue.prototype.$http1=axios.create();//新建一个axios实例
 
 Vue.prototype.$axios=axios.create();
 Vue.prototype.$axios.defaults.baseURL="http://localhost:3000"
-Vue.prototype.post = function(url, params) {
-  return new Promise(function(resolve, reject) {
-    axios.post(url, qs.stringify(params))
-      .then(function(res) {
-        resolve(res)
-      })
-      .catch(function(error) {
-        reject(error)
-      })
-  })
-}
-Vue.prototype.get = function(url, params) {
-  return new Promise(function(resolve, reject) {
-    axios.get(url, { params })
-      .then(function(res) {
-        resolve(res)
-      })
-      .catch(function(error) {
-        reject(error)
-      })
-  })
-}
+Vue.prototype.post = post;
+Vue.prototype.get = get;
 // 添加请求拦截器
 Vue.prototype.$http1.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么

@@ -596,12 +596,7 @@ export default {
       console.log("count3-",this.count);
     })
     console.log("moduleA数据",this.modAdata)
-<<<<<<< HEAD
    
-=======
-    console.log("sbsbsbsb");
-    console.log("");
->>>>>>> d9819eb8e042a5f5bbf36dae2793183d219508a4
     console.log("hello world");
     const obj1 = { a: { b: 1 }}
     const obj2 = Object.assign({}, obj1)
