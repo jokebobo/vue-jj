@@ -162,6 +162,7 @@ export default {
   components: {
     com
   },
+  props:['id'],
   data: function() {
     return {
       chattit: '',
@@ -208,18 +209,9 @@ export default {
     //判断用户是否已经登录
     console.log("进入当前页面");
     console.log("count",this.count);
-      var token=getToken("loginToken098");
-      console.log("token",token);
-      if(!token){
-        this.$router.push({path:'/login'})
-      }else{
-        this.setUser({user:{name:token}});
-      }
-
-
     console.log("路由信息",this.$router)
     var _this = this
-    var id = this.$route.params.id
+    var id = this.id
     this.item_id = id
     //将当期页面参数 id 记录在vuex
     this.setChatId({id});

@@ -1,12 +1,16 @@
 <template>
   <div style="height:100%">
-    <router-view
+    <!-- include 优先匹配组件注册的name -->
+    <keep-alive :include="['Tem']">
+      <!-- 在router-view里面绑定key 使每次路由切换的时候会被识别为一个新的组件 不能做路由缓存 -->
+      <router-view
       :hotacts="hotacts"
       :chatdata="chatdata"
       :meitudata="meitudata"
       :casedata="casedata"
       :sitedata="sitedata"
-      :key="key"></router-view>
+      />
+  </keep-alive>
   </div>
 </template>
 <style lang="stylus">
@@ -209,6 +213,12 @@ export default {
        }).catch(function (error) {
          console.log(error);
        }) */
+  },
+  activated:function(){
+    console.log("keep-alive被激活")
+  },
+  deactivated:function(){
+    console.log("keep-alive 失效")
   },
   beforeDestroy:function(){
     removeToken('loginToken098');

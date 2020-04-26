@@ -3,7 +3,7 @@
     <div ref="main2" class="container-fluid">
       <div class="row">
         <div class="top top1 rela">
-          <a href="javascript:history.back(-1)" class="iconfont icon-jiantou abs backarr" />
+          <a class="iconfont icon-jiantou abs backarr" @click="back"></a>
           <h5>话题讨论</h5>
         </div>
         <div class="chat_list w100 mt40">
@@ -96,6 +96,9 @@ export default {
     ...mapMutations([
       'setChatId'    
     ]),
+    back(){
+      this.$router.go(-1);
+    },
     recId:function(e){
       console.log("当前路由组件",e);
       console.log("获取当前组件ID",);

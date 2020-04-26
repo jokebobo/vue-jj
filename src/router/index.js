@@ -14,7 +14,10 @@ const routes = [
   {
     path:'/index',
     name:'Home',
-    component:Tem
+    component:Tem,
+    meta:{
+      keepAlive:true
+    }
   },
   {
     path:'/hotact/:id',
@@ -22,12 +25,16 @@ const routes = [
     component:hotact,
     meta:{
       requireAuth:true
-    }
+    },
+    props:(route) => ({
+      id:route.params.id
+    })
   },
   {
     path:'/chatlist',
     name:'chatlist',
-    component:chatlist
+    component:chatlist,
+    props:true
   },
   {
     path:'/chat/:id',
@@ -35,27 +42,33 @@ const routes = [
     component:chat,
     meta:{
       requireAuth:true
-    }
+    },
+    props:(route) =>({
+      id:route.params.id
+    })
   },
   {
     path:'/meitu',
     name:'meitu',
-    component:meitu
+    component:meitu,
+    props:true
   },
   {
     path:'/login',
     name:'login',
-    component:()=>import('../views/login/login.vue')
+    component:()=>import('../views/login/login.vue'),
+    props:true
   },
   {
     path:'*',
     name:'notfound',
-    component:()=>import('../views/404/notfound.vue')
+    component:()=>import('../views/404/notfound.vue'),
+    props:true
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
@@ -89,7 +102,7 @@ router.beforeResolve((to,from,next)=>{
 //全局路由导航守卫 判断是否登录
 router.beforeEach((to,from,next) => {
   if(to.matched.some(record=>record.meta.requireAuth)){
-    //需要用户授权
+    //需要用户授权的组件 判断是否已经授权
     var token=getToken("loginToken098");
     if(!token){
       next({

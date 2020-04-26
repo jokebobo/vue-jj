@@ -20,8 +20,8 @@
       <div class="main_top clearfix">
         <!--菜单start-->
         <div class="nav clearfix">
-          <div v-for="(nav,index) in navs" :class="['boxsize','nav_item','ft26',index%5==0?'ml0':'']">
-            <router-link :to="nav.href" class="flex">
+          <div v-for="(nav,index) in navs" :class="['boxsize','nav_item','ft26',index%5==0?'ml0':'',index==linkchose?'linkcol':'']">
+            <router-link :to="nav.href" class="flex" @click="tolink(index)">
               <img :src="nav.icon" alt="">
               <p>{{ nav.title }}</p>
             </router-link>
@@ -243,49 +243,52 @@
           </div>
         </div>
 
-        <div class="col-xs-12 pad0 com mt44">
-          <div ref="mod_nav" class="com_nav mod_nav">
-            <ul class="com_nav2 mod_nav2 clearfix">
-              <li v-for="(tab,index) in tabs" ref="tabli" :class="['com_cho',clicknum==index?'mod_cho':'']" :data-id="index" @click="move(index,tab.clicktime)">
-                <a>{{ tab.tabname }}</a>
-              </li>
-            </ul>
-
-          </div>
-          <div class="com_con w100">
-            <ul class="com_con2 clearfix">
-              <!-- @scroll="toend(index,comlist.times)" -->
-              <li v-for="(comlist,index) in comlists" v-show="clicknum==index" ref="com" class="com_list" data-type="0">
-                <div class="com_main">
-                  <div class="com_main2">
-                    <div v-for="comarr in comlist.comarrs" class="com_item clearfix w100">
-                      <img :src="comarr.arrs.pic" alt="" class="fl">
-                      <div class="com_inf fr">
-                        <h5 class="com_name ell">{{ comarr.arrs.com_name }}</h5>
-                        <div class="mt21 clearfix">
-                          <div class="fl com_inf2 ">
-                            <p class="loc">{{ comarr.arrs.loc }}</p>
-                            <p class="gift">{{ comarr.arrs.gift }}</p>
-                            <p class="ding">{{ comarr.arrs.ding }}</p>
+        <!-- 装修公司列表 start-->
+          <!-- <comList :tabs="tabs" :comlists="comlists"></comList> -->
+          <div class="col-xs-12 pad0 com mt44">
+            <div ref="mod_nav" class="com_nav mod_nav">
+              <ul class="com_nav2 mod_nav2 clearfix">
+                <li v-for="(tab,index) in tabs" ref="tabli" :class="['com_cho',clicknum==index?'mod_cho':'']" :data-id="index" :key="tab.tabname" @click="move(index,tab.clicktime)">
+                  <span>{{ tab.tabname }}</span>
+                </li>
+              </ul>
+    
+            </div>
+            <div class="com_con w100">
+              <ul class="com_con2 clearfix">
+                <!-- @scroll="toend(index,comlist.times)" -->
+                <li v-for="(comlist,index) in comlists" v-show="clicknum==index" ref="com" class="com_list" data-type="0">
+                  <div class="com_main">
+                    <div class="com_main2">
+                      <div v-for="comarr in comlist.comarrs" class="com_item clearfix w100">
+                        <img :src="comarr.arrs.pic" alt="" class="fl">
+                        <div class="com_inf fr">
+                          <h5 class="com_name ell">{{ comarr.arrs.com_name }}</h5>
+                          <div class="mt21 clearfix">
+                            <div class="fl com_inf2 ">
+                              <p class="loc">{{ comarr.arrs.loc }}</p>
+                              <p class="gift">{{ comarr.arrs.gift }}</p>
+                              <p class="ding">{{ comarr.arrs.ding }}</p>
+                            </div>
+                            <span class="fr jl">6.5km</span>
                           </div>
-                          <span class="fr jl">6.5km</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- v-show="comlist.isend" -->
-                <a class="toend">查看更多</a>
-              </li>
-            </ul>
+                  <!-- v-show="comlist.isend" -->
+                  <a class="toend">查看更多</a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-
+        <!-- 装修公司列表 end-->
       </div>
 
     </div>
     <pop></pop>
   </div>
+
 </template>
       <style lang="stylus">
       /* #app
@@ -317,6 +320,9 @@
                 width:140%;
                 padding:0;
             }
+            .linkcol{
+              color:blue;
+            }
     </style>
 <script>
 /* 测试成功引入jquery */
@@ -336,7 +342,9 @@ import { users } from '~@/apis/express'
 import logo from '~@/assets/meitu.png'
 import chatlogo from '~@/assets/chat.png'
 import sell from '~@/assets/sell.png'
+// 加载组件
 import pop from '~@/components/pop.vue'
+import comList from '~@/components/comList.vue'
 import {eventBus} from '~@/utils/event-bus.js'
 // let api=require('../.././api');
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
@@ -518,11 +526,13 @@ export default {
       comlists: [],
       sitearrs: [],
       isend: true,
-      isload: true
+      isload: true,
+      linkchose:-1
     }
   },
   components:{
-    pop
+    pop,
+    comList
   },
   computed: {
     hotarrs: function() {
@@ -575,11 +585,15 @@ export default {
     } */
 
   },
+  created(){
+    console.log("实例已经创建")
+  },
   mounted: function() {
   //  在组件挂载之前执行
   //  渲染跨域图片怎么渲染
   /* this.increment({num:10});
   console.log("count2",this.count); */
+    console.log("当前路由元信息为", this.$route.meta.keepAlive)
     console.log("vuex-a",this.stateA);
     console.log("beArray",this.beArray);
     console.log("removeLast",this.removeLast);
@@ -721,28 +735,10 @@ export default {
     var _this = this
     this.lazyload(0, false, 0)
     this.sitearrs = this._props.sitedata
-
-    // 公司tab初始化
-    var navwid = 0
-    var isstop = true
-    console.log(_this.$refs.tabli)
-    _this.$refs.tabli[0].setAttribute('data-start', true)
-    _this.$refs.tabli.forEach(function(item, index) {
-      if (isstop) {
-        navwid += (item.offsetWidth + 40)
-
-        if (navwid >= _this.$refs.mod_nav.offsetWidth) {
-          var ind = index - 1
-          console.log(ind)
-          if (ind > 0) {
-            _this.$refs.tabli[ind].setAttribute('data-end', true)
-          }
-          isstop = false
-        }
-      }
-    })
   },
-
+  activated(){
+    console.log("当前组件被缓存")
+  },
   methods: {
     ...mapMutations([
       'increment'
@@ -926,6 +922,10 @@ export default {
         $('.mod_nav2').animate({ 'margin-left': parseFloat($('.mod_nav2').css('margin-left')) + _this.prev().outerWidth() + 'px' })
         _this.prev().attr('data-start', 'true')
       }
+    },
+    tolink(ind){
+      this.linkchose=ind;
+      console.log("333");
     }
   }
 }

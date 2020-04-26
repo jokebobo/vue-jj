@@ -142,13 +142,10 @@
   require('../../mock/mock.js');
   export default {
     name: "hotact",
+    props:['id'],
     created: function () {
       var _this = this;
-      var id = this.$route.params.id;
-      console.log(this.$route.params.id);
-
-      alert("路由参数",this.$route.params.id);
-      
+      var id = this.id;   
       var predata = null;
       this.$http1.post('/test', {
         //这里传递参数

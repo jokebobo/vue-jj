@@ -79,6 +79,7 @@
         beforeRouteEnter(to,from,next){
             console.log("上一步页面",from);
             next(vm=>{
+                // 通过 `vm` 来访问组件实例
                 //记录上一个页面的路径
                 vm._data.pathname=from.name;
                 
@@ -119,6 +120,7 @@
                             //用户登录成功
                             console.log("获取用户信息",data.user);
                             this.setUser({user:data.user})
+                            //登录成功后跳转回上一个页面
                             this.$router.replace({name:pathname,params:{id:this.chatId}})
                         }
                         
@@ -126,7 +128,7 @@
 
                         console.log(error)
                     })
-                    //登录成功后跳转回上一个页面
+                    
                     //this.$router.replace({name:pathname,params:{id:this.chatId}})
 
                 }
