@@ -1,6 +1,6 @@
 # 家居页面
 家居页面vue改写 使用技术栈 vue-cli+vuex+vue-router+mock 数据从隔壁jokebobo/data-server模拟数据调取
-
+目前已实现功能为 列表展示 详情展示 添加评论 二级评论 
 ## Project setup
 ```
 npm install
