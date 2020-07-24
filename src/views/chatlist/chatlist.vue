@@ -22,9 +22,9 @@
                     </a>
                   </div>
                 </router-link>
-  
+
               </keep-alive>
-              
+
             </div>
           </div>
         </div>
@@ -34,6 +34,8 @@
       </div>
     </div>
   </div>
+
+
 </template>
 <style>
   @import '~@/assets/css/bootstrap.min.css';
@@ -53,124 +55,130 @@
   }
 </style>
 <script>
-import {mapState,mapMutations} from 'vuex'
-import '../../assets/js/bootstrap.min.js'
-require('../../mock/mock.js')
-import store from '~@/store/index.js'
-//const api = require('../.././apis/api')
-export default {
-  name: 'Chatlist',
- 
-  data: function() {
-    return {
-      logo: require('../../assets/chat_hint.png'),
-      chatarrs: [],
-      size: 6,
-      page: 0,
-      isdone: false
-    }
-  },
-  fetchData(){
-    //异步函数
-    var _this=this;
-    return new Promise((resolve,reject) => {
-      store.dispatch('incrementAsync',{addnum:5});
-      resolve();
-    })
-    
-    
-  },
-  created: function() {
-    //created在beforeResolve之后执行
-    console.log("state为",this.count)
-    const page = this.page
-    this.lazyload(page)
-  },
-  computed:{
-    ...mapState({
-      chatId:state=>state.chatId,
-      count:state=>state.count
-    })
-  },
-  methods: {
-    ...mapMutations([
-      'setChatId'    
-    ]),
-    back(){
-      this.$router.go(-1);
-    },
-    recId:function(e){
-      console.log("当前路由组件",e);
-      console.log("获取当前组件ID",);
-      //this.setChatId({id:})
-    },
-    toend: function() {
-      if (this.$refs.main.scrollTop + this.$refs.main.offsetHeight >= (this.$refs.main2.offsetHeight - 100)) {
-        let page = this.page
-        page++
-        this.throttle(this.lazyload(page), 500)
+  import { mapState, mapMutations } from 'vuex'
+  import '../../assets/js/bootstrap.min.js'
+  require('../../mock/mock.js')
+  import store from '~@/store/index.js'
+  //const api = require('../.././apis/api')
+  export default {
+    name: 'Chatlist',
+
+    data: function () {
+      return {
+        logo: require('../../assets/chat_hint.png'),
+        chatarrs: [],
+        size: 6,
+        page: 0,
+        isdone: false
       }
     },
-    lazyload: function(page) {
-      var _this = this
-      const size = this.size
-      if (!this.isdone) {
-        // 当加载完成后滚动到底不再请求数据
-        this.$axios.post('/chatlist', {
-          id: -1,
-          size: size,
-          page: page
-        }).then(function(res) {
-          console.log('chatlist', res)
-          if (res.data.length != 0) {
-            let chatarrs = _this.chatarrs
-            chatarrs = chatarrs.concat(res.data)
-            console.log(chatarrs)
-            _this.chatarrs = chatarrs
-          } else {
-            console.log('加载完成')
-            _this.isdone = true
+    fetchData() {
+      //异步函数
+      var _this = this;
+      return new Promise((resolve, reject) => {
+        store.dispatch('incrementAsync', { addnum: 5 });
+        resolve();
+      })
+
+
+    },
+    created: function () {
+      //created在beforeResolve之后执行
+      console.log("state为", this.count)
+      const page = this.page
+      this.lazyload(page)
+    },
+    computed: {
+      ...mapState({
+        chatId: state => state.chatId,
+        count: state => state.count
+      })
+    },
+    watch: {
+      '$route': function () {
+        // 监听路由发生变化
+
+      }
+    },
+    methods: {
+      ...mapMutations([
+        'setChatId'
+      ]),
+      back() {
+        this.$router.go(-1);
+      },
+      recId: function (e) {
+        console.log("当前路由组件", e);
+        console.log("获取当前组件ID",);
+        //this.setChatId({id:})
+      },
+      toend: function () {
+        if (this.$refs.main.scrollTop + this.$refs.main.offsetHeight >= (this.$refs.main2.offsetHeight - 100)) {
+          let page = this.page
+          page++
+          this.throttle(this.lazyload(page), 500)
+        }
+      },
+      lazyload: function (page) {
+        var _this = this
+        const size = this.size
+        if (!this.isdone) {
+          // 当加载完成后滚动到底不再请求数据
+          this.$axios.post('/chatlist', {
+            id: -1,
+            size: size,
+            page: page
+          }).then(function (res) {
+            console.log('chatlist', res)
+            if (res.data.length != 0) {
+              let chatarrs = _this.chatarrs
+              chatarrs = chatarrs.concat(res.data)
+              console.log(chatarrs)
+              _this.chatarrs = chatarrs
+            } else {
+              console.log('加载完成')
+              _this.isdone = true
+            }
+            _this.page = page
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }
+      },
+      throttle: function (func, delay) {
+        // 节流函数
+        var timer = null
+        return function () {
+          var context = this
+          var args = arguments
+          if (!timer) {
+            timer = setTimeout(function () {
+              func.apply(context, args)
+              timer = null
+            }, delay)
           }
-          _this.page = page
-        }).catch(function(error) {
-          console.log(error)
-        })
-      }
-    },
-    throttle: function(func, delay) {
-      // 节流函数
-      var timer = null
-      return function() {
-        var context = this
-        var args = arguments
-        if (!timer) {
-          timer = setTimeout(function() {
-            func.apply(context, args)
-            timer = null
-          }, delay)
         }
       }
+    },
+    beforeRouteLeave(to, from, next) {
+      console.log("chatlist离开当前页面", from);
+      console.log("chatlist目标页面", to)
+      this.setChatId({ id: to.params.id });
+      next();
     }
-  },
-  beforeRouteLeave(to,from,next){
-    console.log("chatlist离开当前页面",from);
-    console.log("chatlist目标页面",to)
-    this.setChatId({id:to.params.id});
-    next();
-  }
-  /* beforeRouteLeave (to, from, next) {
-     console.log("离开当前页面");
-    if(to.name=="chat"){
-      console.log("离开chatlist页面了");
-      console.log(to);
+    /* beforeRouteLeave (to, from, next) {
+       console.log("离开当前页面");
+      if(to.name=="chat"){
+        console.log("离开chatlist页面了");
+        console.log(to);
+        
+        this.setChatId({id:to.params.id});
+        console.log("页面参数为",this.chatId);
+        next();
+      }else{
+        next();
+      } 
       
-      this.setChatId({id:to.params.id});
-      console.log("页面参数为",this.chatId);
-      next();
-    }else{
-      next();
-    } 
-    
-  } */
-}
+    } */
+  }
 </script>
