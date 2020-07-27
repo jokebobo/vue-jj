@@ -4,48 +4,44 @@
     <!-- include 优先匹配组件注册的name -->
     <keep-alive :include="['Tem']">
       <!-- 在router-view里面绑定key 使每次路由切换的时候会被识别为一个新的组件 不能做路由缓存 -->
-      <transition :name="aniName">
-        <router-view :hotacts="hotacts" :chatdata="chatdata" :meitudata="meitudata" :casedata="casedata"
+      <!-- 因为进入和离开过渡同时生效 mode用来设置先后顺序 -->
+      <transition :name="aniName" mode="out-in">
+        <router-view key="unique" :hotacts="hotacts" :chatdata="chatdata" :meitudata="meitudata" :casedata="casedata"
           :sitedata="sitedata" />
       </transition>
     </keep-alive>
   </div>
 </template>
 <style scoped>
-  .slide-enter {
-    left: 100%;
+  .slideout-leave-active,
+  .slidein-leave-active {
+    transition: all 0.4s;
   }
 
-  .slide-enter-active {
-    animation: moveIn 1s;
+  .slidein-enter-active,
+  .slideout-enter-active {
+    transition: all 0.6s;
   }
 
-  @keyframes moveIn {
-    0% {
-      left: 100%;
-    }
-
-    100% {
-      left: 0%;
-    }
+  .slidein-enter,
+  .slideout-leave-to {
+    transform: translateX(100%);
+    opacity: 0
   }
 
-  .slide-leave {
-    left: 0%;
+
+  .slidein-leave,
+  .slideout-leave,
+  .slideout-enter-to,
+  .slidein-enter-to {
+    transform: translateX(0%);
+    opacity: 1;
   }
 
-  .slide-leave-active {
-    animation: moveleave 1s;
-  }
-
-  @keyframes moveleave {
-    0% {
-      left: 0%;
-    }
-
-    100% {
-      left: 100%;
-    }
+  .slidein-leave-to,
+  .slideout-enter {
+    transform: translateX(-100%);
+    opacity: 0
   }
 </style>
 <style lang="stylus">
@@ -82,7 +78,15 @@
       $route(to, from) {
         let todep = to.path.split("/").length;
         let fromdep = from.path.split("/").length;
-        this.aniName = todep >= fromdep ? 'slide-enter' : 'slide-leave'
+
+        console.log("跳转目标==》", to);
+        console.log("跳转来源==》", from);
+        if (to.path == "/index" && from.path != "/") {
+          this.aniName = 'slideout';
+        } else {
+          this.aniName = todep >= fromdep ? 'slidein' : 'slideout'
+        }
+
         console.log("监听路由变化", this.aniName)
       }
     },
@@ -266,6 +270,9 @@
     },
     beforeDestroy: function () {
       removeToken('loginToken098');
+    },
+    methods: {
+
     }
   }
 </script>

@@ -1,20 +1,15 @@
 //配置路由
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Tem from '../views/index/tem.vue'
-import hotact from '../views/index/hotact.vue'
-import chatlist from '../views/chatlist/chatlist.vue'
-import chat from '../views/chatlist/chat.vue'
-import meitu from '../views/meitu/meitu.vue'
 import store from '../store/index.js'
 import { getToken } from '~@/utils/auth'
 Vue.use(VueRouter)
-
+// props传参 页面接受参数
 const routes = [
   {
     path: '/index',
     name: 'Home',
-    component: Tem,
+    component: () => import('../views/index/tem.vue'),
     meta: {
       keepAlive: true
     }
@@ -22,7 +17,7 @@ const routes = [
   {
     path: '/hotact/:id',
     name: 'hotact',
-    component: hotact,
+    component: () => import('../views/index/hotact.vue'),
     meta: {
       requireAuth: true
     },
@@ -33,13 +28,13 @@ const routes = [
   {
     path: '/chatlist',
     name: 'chatlist',
-    component: chatlist,
+    component: () => import('../views/chatlist/chatlist.vue'),
     props: true
   },
   {
     path: '/chat/:id',
     name: 'chat',
-    component: chat,
+    component: () => import('../views/chatlist/chat.vue'),
     meta: {
       requireAuth: true
     },
@@ -50,7 +45,7 @@ const routes = [
   {
     path: '/meitu',
     name: 'meitu',
-    component: meitu,
+    component: () => import('../views/meitu/meitu.vue'),
     props: true
   },
   {
