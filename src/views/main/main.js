@@ -1,21 +1,21 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from '../../router'
+import router from '../../router/index'
 import store from '../../store/index'
 import '../../registerServiceWorker'
 import '../../../node_modules/swiper/css/swiper.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import qs from 'qs'
 import axios from 'axios'
-import {post,get} from '../../utils/req-methods'
+import { post, get } from '../../utils/req-methods'
 Vue.use(VueAwesomeSwiper)
 
 
 Vue.config.productionTip = false
-Vue.prototype.$http1=axios.create();//新建一个axios实例
+Vue.prototype.$http1 = axios.create();//新建一个axios实例
 
-Vue.prototype.$axios=axios.create();
-Vue.prototype.$axios.defaults.baseURL="http://localhost:3000"
+Vue.prototype.$axios = axios.create();
+Vue.prototype.$axios.defaults.baseURL = "http://localhost:3000"
 Vue.prototype.post = post;
 Vue.prototype.get = get;
 // 添加请求拦截器
@@ -60,11 +60,11 @@ Vue.prototype.$http1.interceptors.response.use(function (response) {
 });
 
 // 时间格式化
-Vue.prototype.formdate = function(format, timestamp) {
+Vue.prototype.formdate = function (format, timestamp) {
   var jsdate = ((timestamp) ? new Date(timestamp * 1000) : new Date())
 
   var ret = ''
-  var pad = function(n, c) {
+  var pad = function (n, c) {
     if ((n = n + '').length < c) {
       return new Array(++c - n.length).join('0') + n
     } else {
@@ -76,17 +76,17 @@ Vue.prototype.formdate = function(format, timestamp) {
   var txt_months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   var f = {
     // Day
-    d: function() { return pad(f.j(), 2) },
-    D: function() { return f.l().substr(0, 3) },
-    j: function() { return jsdate.getDate() },
-    l: function() { return txt_weekdays[f.w()] },
-    N: function() { return f.w() + 1 },
-    S: function() { return txt_ordin[f.j()] ? txt_ordin[f.j()] : 'th' },
-    w: function() { return jsdate.getDay() },
-    z: function() { return (jsdate - new Date(jsdate.getFullYear() + '/1/1')) / 864e5 >> 0 },
+    d: function () { return pad(f.j(), 2) },
+    D: function () { return f.l().substr(0, 3) },
+    j: function () { return jsdate.getDate() },
+    l: function () { return txt_weekdays[f.w()] },
+    N: function () { return f.w() + 1 },
+    S: function () { return txt_ordin[f.j()] ? txt_ordin[f.j()] : 'th' },
+    w: function () { return jsdate.getDay() },
+    z: function () { return (jsdate - new Date(jsdate.getFullYear() + '/1/1')) / 864e5 >> 0 },
 
     // Week
-    W: function() {
+    W: function () {
       var a = f.z(); var b = 364 + f.L() - a
       var nd2; var nd = (new Date(jsdate.getFullYear() + '/1/1').getDay() || 7) - 1
       if (b <= 2 && ((jsdate.getDay() || 7) - 1) <= 2 - b) {
@@ -102,11 +102,11 @@ Vue.prototype.formdate = function(format, timestamp) {
     },
 
     // Month
-    F: function() { return txt_months[f.n()] },
-    m: function() { return pad(f.n(), 2) },
-    M: function() { return f.F().substr(0, 3) },
-    n: function() { return jsdate.getMonth() + 1 },
-    t: function() {
+    F: function () { return txt_months[f.n()] },
+    m: function () { return pad(f.n(), 2) },
+    M: function () { return f.F().substr(0, 3) },
+    n: function () { return jsdate.getMonth() + 1 },
+    t: function () {
       var n
       if ((n = jsdate.getMonth() + 1) == 2) {
         return 28 + f.L()
@@ -120,15 +120,15 @@ Vue.prototype.formdate = function(format, timestamp) {
     },
 
     // Year
-    L: function() { var y = f.Y(); return (!(y & 3) && (y % 1e2 || !(y % 4e2))) ? 1 : 0 },
+    L: function () { var y = f.Y(); return (!(y & 3) && (y % 1e2 || !(y % 4e2))) ? 1 : 0 },
     // o not supported yet
-    Y: function() { return jsdate.getFullYear() },
-    y: function() { return (jsdate.getFullYear() + '').slice(2) },
+    Y: function () { return jsdate.getFullYear() },
+    y: function () { return (jsdate.getFullYear() + '').slice(2) },
 
     // Time
-    a: function() { return jsdate.getHours() > 11 ? 'pm' : 'am' },
-    A: function() { return f.a().toUpperCase() },
-    B: function() {
+    a: function () { return jsdate.getHours() > 11 ? 'pm' : 'am' },
+    A: function () { return f.a().toUpperCase() },
+    B: function () {
       // peter paul koch:
       var off = (jsdate.getTimezoneOffset() + 60) * 60
       var theSeconds = (jsdate.getHours() * 3600) + (jsdate.getMinutes() * 60) + jsdate.getSeconds() + off
@@ -139,33 +139,33 @@ Vue.prototype.formdate = function(format, timestamp) {
       if ((String(beat)).length == 2) beat = '0' + beat
       return beat
     },
-    g: function() { return jsdate.getHours() % 12 || 12 },
-    G: function() { return jsdate.getHours() },
-    h: function() { return pad(f.g(), 2) },
-    H: function() { return pad(jsdate.getHours(), 2) },
-    i: function() { return pad(jsdate.getMinutes(), 2) },
-    s: function() { return pad(jsdate.getSeconds(), 2) },
+    g: function () { return jsdate.getHours() % 12 || 12 },
+    G: function () { return jsdate.getHours() },
+    h: function () { return pad(f.g(), 2) },
+    H: function () { return pad(jsdate.getHours(), 2) },
+    i: function () { return pad(jsdate.getMinutes(), 2) },
+    s: function () { return pad(jsdate.getSeconds(), 2) },
     // u not supported yet
 
     // Timezone
     // e not supported yet
     // I not supported yet
-    O: function() {
+    O: function () {
       var t = pad(Math.abs(jsdate.getTimezoneOffset() / 60 * 100), 4)
       if (jsdate.getTimezoneOffset() > 0) t = '-' + t; else t = '+' + t
       return t
     },
-    P: function() { var O = f.O(); return (O.substr(0, 3) + ':' + O.substr(3, 2)) },
+    P: function () { var O = f.O(); return (O.substr(0, 3) + ':' + O.substr(3, 2)) },
     // T not supported yet
     // Z not supported yet
 
     // Full Date/Time
-    c: function() { return f.Y() + '-' + f.m() + '-' + f.d() + 'T' + f.h() + ':' + f.i() + ':' + f.s() + f.P() },
+    c: function () { return f.Y() + '-' + f.m() + '-' + f.d() + 'T' + f.h() + ':' + f.i() + ':' + f.s() + f.P() },
     // r not supported yet
-    U: function() { return Math.round(jsdate.getTime() / 1000) }
+    U: function () { return Math.round(jsdate.getTime() / 1000) }
   }
 
-  return format.replace(/[\\]?([a-zA-Z])/g, function(t, s) {
+  return format.replace(/[\\]?([a-zA-Z])/g, function (t, s) {
     if (t != s) {
       // escaped
       ret = s
@@ -184,19 +184,19 @@ new Vue({
   router,
   store,
   render: h => h(App),
-  mounted:function(){
-   //vue实例渲染
-   var design_width = 750;
-   if (/Android (\d+\.\d+)/.test(navigator.userAgent)) {
-     var version = parseFloat(RegExp.$1);
-     if (version > 2.3) {
-       var phoneScale = parseInt(window.screen.width) / design_width;
-       document.write('<meta name="viewport" content="width=' + design_width + ', minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
-     } else {
-       document.write('<meta name="viewport" content="width=' + design_width + ', target-densitydpi=device-dpi">');
-     }
-   } else {
-     document.write('<meta name="viewport" content="width=' + design_width + ', user-scalable=no, target-densitydpi=device-dpi">');
-   }
+  mounted: function () {
+    //vue实例渲染
+    var design_width = 750;
+    if (/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+      var version = parseFloat(RegExp.$1);
+      if (version > 2.3) {
+        var phoneScale = parseInt(window.screen.width) / design_width;
+        document.write('<meta name="viewport" content="width=' + design_width + ', minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+      } else {
+        document.write('<meta name="viewport" content="width=' + design_width + ', target-densitydpi=device-dpi">');
+      }
+    } else {
+      document.write('<meta name="viewport" content="width=' + design_width + ', user-scalable=no, target-densitydpi=device-dpi">');
+    }
   }
 }).$mount('#app')

@@ -605,6 +605,7 @@
       //  渲染跨域图片怎么渲染
       /* this.increment({num:10});
       console.log("count2",this.count); */
+      this.initTab();
       console.log("当前路由元信息为", this.$route.meta.keepAlive)
       console.log("vuex-a", this.stateA);
       console.log("beArray", this.beArray);
@@ -699,51 +700,6 @@
       console.log('hw执行结果为:', hw.next())
       hw.next()
       console.log('hw执行结果为:', hw.next())
-
-      /* function* f() {
-      for(var i = 0; true; i++) {
-        var reset = yield i;
-        if(reset) { i = -1; }
-      }
-      }
-  
-      var g = f();
-      g.next();//{value:"0"}
-      g.next();//{value:"1"}
-      //next方法里面带参数就会被当做上一个yield的返回值,如果next里面不带参数则上一个yield等于返回undefined
-      g.next(true);//{value:"0"} */
-
-      /*  function* foo(x) {
-      var y = 2 * (yield (x + 1));
-      var z = yield (y / 3);
-      return (x + y + z);
-      }
-      var a=foo(5);
-      a.next();//{value:"6"} */
-      /* var _this = this
-      this.asyncincrementA({ num: 3 }).then(function() {
-        console.log('我是异步')
-        console.log('count22', _this.count)
-      })
-      this.asyncincrementA({ num: 3 }).then(function() {
-        console.log('我是异步')
-        console.log('count66', _this.count)
-      })
-      this.incrementBA({ num: 3 }).then(function() {
-        console.log('我是异步')
-        console.log('count55', _this.count)
-      })
-      this.incrementA({ num: 10 })
-      console.log('count', _this.count)
-      this.incrementA({ num: 6 })
-      console.log('count33', _this.count)
-      this.someC({ num: 15 }).then(function() {
-        console.log('count99', _this.count)
-      })
-      console.log('getter', this.reverseArrA)
-      console.log('getter2', this.getarrsBynumA(2))
-      console.log('samemusic', this.callmusicA)
-      console.log('samemusic', this.samemusic) */
       var _this = this
       this.lazyload(0, false, 0)
       this.sitearrs = this._props.sitedata
@@ -759,21 +715,35 @@
         'incrementAsync',
         'incrementAsyncB'
       ]),
-      /* ...mapMutations({
-        incrementA: 'a/increment'
-      }),
-      ...mapActions({
-        asyncincrementA: 'a/asyncincrement',
-        incrementBA: 'a/incrementB',
-        someC: 'someC'
-      }), */
       closepop() {
         console.log("click");
         //发布
         eventBus.$emit('closepop');
       },
+      initTab() {
+        // tab 滑动属性初始化
+        console.log("获取父级元素==》", this.$refs.mod_nav.offsetWidth);
+        let outW = this.$refs.mod_nav.offsetWidth;
+        let calW = 0;
+        let endInd = 0;
+        try {
+          this.$refs.tabli.forEach((item, index) => {
+            calW = item.offsetWidth + item.offsetLeft;
+            if (calW >= outW) {
+              endInd = index;
+              // 跳出循环体
+              throw Error
+            }
+
+          })
+        } catch (error) {
+          console.log(error)
+        }
+        $('.mod_nav li').eq(0).attr("data-start", true);
+        $('.mod_nav li').eq(endInd - 1).attr("data-end", true);
+      },
       lazyload: function (clicktime, iscroll, loadtimes) {
-        alert("clicktime" + clicktime + "iscroll" + iscroll, +"loadtimes" + loadtimes);
+        //alert("clicktime" + clicktime + "iscroll" + iscroll, +"loadtimes" + loadtimes);
         console.log("请求users");
         //  clicktime是点击标签的次数,iscroll判断是否处于滚动加载状态，true为滚动加载，
         //  loadtimes为加载次数
@@ -791,7 +761,7 @@
               page: loadtimes + 1
             }
           ).then(function (res) {
-            alert("2222");
+            //alert("2222");
             console.log('data', res.data)
             var arr = _this.comlists
             if (res.data.length != 0) {
@@ -840,7 +810,7 @@
         if (iscroll) {
           //  滚动加载状态
           console.log('23333')
-          alert("333");
+          //alert("333");
           loadtimes++
           users(
             {
